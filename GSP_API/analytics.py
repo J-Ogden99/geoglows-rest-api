@@ -1,11 +1,12 @@
 import os
 import requests
+from cloud_watch_logging import log_request
 
 GA_ID = os.getenv('GOOGLE_ANALYTICS_ID')
 GA_TOKEN = os.getenv('GOOGLE_ANALYTICS_TOKEN')
+PRODUCT_LOOKUP = {}
 
-
-def track_event(version: str, product: str, reach_id: int) -> None:
+def track_event(version: str, product: str, reach_id: int, region_id: int = None, source: str = None, format: str = 'csv') -> None:
     """
     Posts a custom event to the Google Analytics V4 reporting rest endpoint
 
@@ -35,3 +36,5 @@ def track_event(version: str, product: str, reach_id: int) -> None:
         f'https://www.google-analytics.com/mp/collect?measurement_id={GA_ID}&api_secret={GA_TOKEN}',
         json=data
     )
+
+    log_request(version=f"0{version[-1]}", product=PRODUCT_LOOKUP[product], link_no=reach_id, region_no=region_id, source=source, format="csv")
