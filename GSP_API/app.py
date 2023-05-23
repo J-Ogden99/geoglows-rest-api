@@ -7,7 +7,8 @@ from flask_cors import CORS, cross_origin
 import v1_controllers
 import v2_controllers
 
-import analytics
+import analytics, cloud_watch_logging
+from constants import PRODUCT_LOOKUP
 
 print("Creating Application")
 
@@ -75,6 +76,11 @@ def rest_endpoints_v2(product: str, reach_id: int = None):
         v2_controllers.handle_request(request, product, reach_id)
     print(return_format)
     analytics.track_event(version="v2", product=product, reach_id=reach_id)
+    cloud_watch_logging.log_request(version="02",
+                                    product=PRODUCT_LOOKUP[product],
+                                    link_no=reach_id,
+                                    format=return_format
+                                    )
 
     # forecast data products
     if product == 'forecast':
