@@ -39,4 +39,4 @@ def log_request(**kwargs):
     )
 
     # Print the response from CloudWatch
-    print(response)
+    # print(response)

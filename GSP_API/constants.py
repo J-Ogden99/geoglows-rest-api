@@ -5,3 +5,4 @@ PATH_TO_ERA_5 = '/mnt/output/era-5'
 M3_TO_FT3 = 35.3146667
 LOG_GROUP_NAME = 'data-service-queries-group'
 LOG_STREAM_NAME = 'data-service-queries-stream'
+PRODUCT_LOOKUP = {}
